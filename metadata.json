@@ -1,0 +1,8 @@
+{
+  "name": "KitchenSync",
+  "description": "The operating system for your kitchen. Synchronize inventory, verify shopping items to prevent errors, find deals by proximity, and manage consumption habits.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}
