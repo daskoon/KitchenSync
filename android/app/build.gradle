@@ -16,14 +16,11 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+
     signingConfigs {
-        release {
-            storeFile file("../../upload-keystore.jks")
-            storePassword "password123"
-            keyAlias "key0"
-            keyPassword "password123"
-        }
+        release
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -35,6 +32,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+}
+
+// Load signing config from keystore.properties if it exists
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+if (keystorePropertiesFile.exists()) {
+    def props = new Properties()
+    props.load(new FileInputStream(keystorePropertiesFile))
+
+    android.signingConfigs.release.storeFile = file(props['storeFile'])
+    android.signingConfigs.release.storePassword = props['storePassword']
+    android.signingConfigs.release.keyAlias = props['keyAlias']
+    android.signingConfigs.release.keyPassword = props['keyPassword']
 }
 
 repositories {
